@@ -1,13 +1,27 @@
 <script>
-    import { handleQuery } from "../scripts/makeQuery.js";
-
+    export let onSubmit = console.log;
     export let placeholder = "SELECT * FROM information_schema.tables;";
-    let query = "";
+    export let query = "";
+
+    const formDataToObject = (formData) => {
+        const data = {};
+        for (const field of formData) {
+            const [key, value] = field;
+            data[key] = value;
+        }
+
+        return data;
+    }
+
+    const getQueryURL = (event) => {
+        const formData = new FormData(event.target);
+        return formDataToObject(formData).sql;
+    }
 </script>
 
-<form on:submit|preventDefault={handleQuery}>
+<form on:submit|preventDefault={(e) => onSubmit(getQueryURL(e))}>
     <textarea
-        class="w-full bg-white/25 shadow-inner font-mono resize-y rounded-md p-1"
+        class="w-full bg-white/25 shadow-inner font-mono resize-y rounded-md px-2 py-0.5 placeholder:text-gray-500/80"
         name="sql"
         bind:value={query}
         {placeholder}
