@@ -5,7 +5,7 @@
     "scripts": {
         "build": "rollup -c",
         "dev": "rollup -c -w",
-        "start": "sirv docs --no-clear"
+        "start": "sirv public --no-clear"
     },
     "devDependencies": {
         "@fullhuman/postcss-purgecss": "^4.1.3",
