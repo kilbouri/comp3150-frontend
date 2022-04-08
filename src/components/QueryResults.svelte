@@ -1,30 +1,36 @@
 <script>
-    export let records;
+    export let queryResults;
+    export let queryError;
 </script>
 
 <!-- This component is responsible for showing a table of query results -->
 <div class="space-y-4 overflow-auto">
-    {#if (typeof records === 'string')}
-        <p class="text-red-400">Your query is invalid, please correct any errors and try again. The error:</p>
-        <p class="text-red-400">{records}</p>
-    {:else if records.length > 0}
+    {#if queryError}
+        <p class="text-red-400">{queryError}</p>
+    {:else if typeof queryResults === "string"}
+        <p class="text-red-400">
+            Your query is invalid, please correct any queryErrors and try again. The queryError: {queryResults}
+        </p>
+    {:else if queryResults && queryResults.length > 0}
         <table class="table-auto w-full font-mono text-left whitespace-nowrap">
             <thead>
-                {#each Object.keys(records[0]) as attributeName}
-                    <th>{attributeName}</th>
+                {#each Object.keys(queryResults[0]) as attributeName}
+                    <th class="dark:text-slate-200/90 px-2">{attributeName}</th>
                 {/each}
             </thead>
             <tbody>
-                {#each records as record}
-                    <tr class="even:bg-slate-300/25">
+                {#each queryResults as record}
+                    <tr class="odd:bg-slate-300/25 dark:odd:bg-slate-200/10 dark:text-slate-200/90">
                         {#each Object.values(record) as attributeValue}
-                            <td class="px-2">{attributeValue || "None"}</td>
+                            <td class="px-2"
+                                >{attributeValue.toString() === "" ? "None" : attributeValue}</td
+                            >
                         {/each}
                     </tr>
                 {/each}
             </tbody>
         </table>
     {:else}
-        <p class="text-center w-full">No result.</p>
+        <p class="w-full dark:text-white/50">No result.</p>
     {/if}
 </div>
