@@ -1,9 +1,11 @@
 <script>
     import Button from "./Button.svelte";
+    import { queries } from "../scripts/queries.js";
+
     export let onSubmit = console.log;
-    export let placeholder =
-        'SELECT * FROM information_schema.tables WHERE table_schema = "powerCompany";';
+    export let placeholder = "SELECT * FROM PowerFacilities;";
     export let query = "";
+    let inputBoxMinRows = undefined;
 
     const formDataToObject = (formData) => {
         const data = {};
@@ -25,41 +27,24 @@
     <textarea
         class="w-full bg-zinc-200/50 dark:placeholder:text-white/50 dark:text-slate-200/90 shadow-inner font-mono resize-y rounded-md px-2 py-0.5 placeholder:text-gray-500/80 my-1"
         name="sql"
+        rows={inputBoxMinRows}
         bind:value={query}
         {placeholder}
     />
 
     <div class="w-full flex flex-wrap gap-2">
-        <Button
-            fillSpace={true}
-            tooltip="Select the names, emails, and phone numbers of all customers with overdue payments."
-        >
-            Overdue Accounts
-        </Button>
-        <Button fillSpace={true} tooltip="Select the balance of each customer account.">
-            Account Balances
-        </Button>
-        <Button
-            fillSpace={true}
-            tooltip="Select the phone number of all customers with more than one serviced location."
-        >
-            Owners of Multiple Locations
-        </Button>
-        <Button fillSpace={true} tooltip="Select the net finances for the last quarter.">
-            Last Quarter's Finances
-        </Button>
-        <Button fillSpace={true} tooltip="Select the net income (or loss) of each facility.">
-            Net Income or Loss of Facilities
-        </Button>
-        <Button
-            fillSpace={true}
-            tooltip="Selects all power facilities. Mainly meant for debugging."
-            onclick={() => {
-                query = "SELECT * FROM PowerFacility;";
-            }}
-        >
-            All Power Facilities
-        </Button>
+        {#each queries as presetQuery}
+            <Button
+                fillSpace
+                tooltip={presetQuery.tooltip}
+                onclick={() => {
+                    query = presetQuery.query.join("\n");
+                    inputBoxMinRows = presetQuery.query.length;
+                }}
+            >
+                {presetQuery.name}
+            </Button>
+        {/each}
     </div>
     <div id="submitContainer" class="flex flex-wrap items-center w-full my-2 gap-2">
         <Button disabled={!query} type="submit" tooltip="Evaluate the given query.">Submit</Button>

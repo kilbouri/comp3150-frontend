@@ -6,11 +6,10 @@
 <!-- This component is responsible for showing a table of query results -->
 <div class="space-y-4 overflow-auto">
     {#if queryError}
-        <p class="text-red-400">{queryError}</p>
-    {:else if typeof queryResults === "string"}
         <p class="text-red-400">
-            Your query is invalid, please correct any queryErrors and try again. The queryError: {queryResults}
+            Your query is invalid, please correct the errors and try again. The error:
         </p>
+        <p class="text-red-400">{queryError}</p>
     {:else if queryResults && queryResults.length > 0}
         <table class="table-auto w-full font-mono text-left whitespace-nowrap">
             <thead>

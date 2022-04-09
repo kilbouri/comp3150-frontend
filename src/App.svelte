@@ -24,8 +24,11 @@
         queryError = "";
 
         try {
-            queryResults = await makeMySQLQuery(query);
+            const { data, sqlErr } = await makeMySQLQuery(query);
+            queryError = sqlErr;
+            queryResults = data;
         } catch (err) {
+            console.log(err);
             queryError = "Unable to make query. This isn't an issue with your query.";
         }
 
