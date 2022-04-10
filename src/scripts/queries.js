@@ -50,7 +50,7 @@ const queries = [
             "JOIN PrimaryContact ON Invoice.billedTo = PrimaryContact.customerID",
             "WHERE",
             "    amountOwed > amountPaid AND",
-            "    dateIssued < CURRENT_DATE AND",
+            "    DATE_ADD(dateIssued, INTERVAL 30 DAY) < CURRENT_DATE AND",
             "    amountOwed > 0",
             "GROUP BY invoiceID;",
         ],
