@@ -20,5 +20,5 @@ yarn dev
 ![Initial Landing](screenshots/initial.png)
 ![Light Mode](screenshots/light_mode.png)
 ![Results](screenshots/results.png)
-![Mobile Response - iPad](screenshots/iPad.png)
+![Mobile Response - iPad](screenshots/ipad.png)
 ![Mobile Response - Galaxy S20](screenshots/galaxy_s20.png)
